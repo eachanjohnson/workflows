@@ -9,7 +9,7 @@ execute(x, ...)
 \arguments{
 \item{x}{List of class "workflow" or "pipeline". If workflow, builds the targets in the Pipelines; if Pipeline, builds the targets.}
 
-\item{...}{Other arguments.}
+\item{...}{Other arguments passed to execute_distributed.}
 
 \item{locality}{If "locality", execute on local machine. If "sge", spin up one SGE job per parallel pipeline and wait for results;
 requires a GridEngine cluster manager.}
@@ -23,5 +23,8 @@ List of class "workflow" or "pipeline" with targets built.
 }
 \description{
 Execute the Targets in Pipeleines.
+}
+\seealso{
+\link{execute_distributed}
 }
 
