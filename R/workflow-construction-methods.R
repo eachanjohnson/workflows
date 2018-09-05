@@ -33,7 +33,7 @@ delay.pipeline <- function(x, method, ...) {
 
   }
 
-  new_target <- newTarget(method=method, checkpoint=x$checkpoint, input_file=input_file, output_file=output_file, ...)
+  new_target <- newTarget(method=method, input_file=input_file, output_file=output_file, ...)
 
   if ( length(x$targets) == 0 ) x$targets <- list(new_target)
   else  x$targets <- c(x$targets, list(new_target))
@@ -88,41 +88,6 @@ rollback.pipeline <- function(x,  n=-1, ...) {
     return ( x$targets[[i]] )
 
   })
-
-  return ( x )
-
-}
-
-#' @title Write Workflow to disk.
-#' @description Save serialized Workflow \code{x} as \code{filename}
-#' @param x Object of class Workflow.
-#' @param filename Character. Filename to serialize \code{x} under.
-#' @param ... Other arguments.
-#' @return The input Workflow, invisibly.
-#' @seealso \link{\code{saveRDS}}
-#' @export
-write.workflow <- function(x, filename, ...) {
-
-  println('Saving workflow as', filename)
-
-  saveRDS(x, file=filename)
-
-  return ( invisible(x) )
-
-}
-
-#' @title Load Workflow from disk
-#' @description Load serialized Workflow from \code{filename}.
-#' @param filename Character. Path to serialized Workflow.
-#' @param ... Other arguments.
-#' @return A list of class "workflow".
-#' @seealso \link{\code{readRDS}}
-#' @export
-load.workflow <- function(filename, ...) {
-
-  println('Loading', filename)
-
-  x <- readRDS(filename)
 
   return ( x )
 
@@ -189,3 +154,38 @@ is_built.default <- function(x, ...) stop('Cannot check build of', class(x))
 
 #' @export
 is_built.target <- function(x, ...) x$is_built
+
+#' @title Write Workflow to disk.
+#' @description Save serialized Workflow \code{x} as \code{filename}
+#' @param x Object of class Workflow.
+#' @param filename Character. Filename to serialize \code{x} under.
+#' @param ... Other arguments.
+#' @return The input Workflow, invisibly.
+#' @seealso \link{saveRDS}
+#' @export
+write_workflow <- function(x, filename, ...) {
+
+  println('Saving workflow as', filename)
+
+  saveRDS(x, file=filename)
+
+  return ( invisible(x) )
+
+}
+
+#' @title Load Workflow from disk
+#' @description Load serialized Workflow from \code{filename}.
+#' @param filename Character. Path to serialized Workflow.
+#' @param ... Other arguments.
+#' @return A list of class "workflow".
+#' @seealso \link{readRDS}
+#' @export
+load_workflow <- function(filename, ...) {
+
+  println('Loading', filename)
+
+  x <- readRDS(filename)
+
+  return ( x )
+
+}

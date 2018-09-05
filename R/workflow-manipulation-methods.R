@@ -11,8 +11,10 @@
 #' @export
 scatter <- function(x, ...) UseMethod('scatter')
 
+#' @export
 scatter.default <- function(x, ...) stop('Cannot scatter ', class(x))
 
+#' @export
 scatter.workflow <- function(x, elements, by, ...) {
 
   new_pipelines <- lapply(x$pipelines, scatter, elements, by)
@@ -23,6 +25,7 @@ scatter.workflow <- function(x, elements, by, ...) {
 
 }
 
+#' @export
 scatter.pipeline <- function(x, elements, by, ...) {
 
   original_class <- class(x$data)
@@ -83,8 +86,10 @@ scatter.pipeline <- function(x, elements, by, ...) {
 #' @export
 gather <- function(x, ...) UseMethod('gather')
 
+#' @export
 gather.default <- function(x, ...) stop('Cannot gather ', class(x))
 
+#' @export
 gather.workflow <- function(x, elements, by, ...) {
 
   if ( length(x$pipelines) > 1 ) {
@@ -108,12 +113,14 @@ gather.workflow <- function(x, elements, by, ...) {
 #' @param by Not used.
 #' @param ... Other arguments.
 #' @return A list of class "pipeline".
-#' @importFrom magrittr %>% %<>%
 #' @export
 bind <- function(x, ...) UseMethod('bind')
 
+#' @export
 bind.default <- function(x, ...) stop('Cannot bind ', class(x))
 
+#' @importFrom magrittr %>% %<>%
+#' @export
 bind.pipeline <- function(x1, x2, elements, ...) {
 
   original_class <- class(x1$data)
@@ -135,7 +142,7 @@ bind.pipeline <- function(x1, x2, elements, ...) {
         #print(tail(df1))
         #print(head(df2))
         if ( ! x1$scattered_by %in% names(df1) )
-          df1 %<>%  dplyr::mutate_(.dots=setNames(paste0('"', x1$scattered_value, '"'), x1$scattered_by))
+          df1 <- df1 %>% dplyr::mutate_(.dots=setNames(paste0('"', x1$scattered_value, '"'), x1$scattered_by))
 
         df1_classes <- sapply(df1, class)
         df1_factors <- names(df1_classes)[df1_classes == 'factor']
@@ -143,7 +150,7 @@ bind.pipeline <- function(x1, x2, elements, ...) {
 
         #print(df1_factors)
 
-        if ( length(df1_factors) > 0 ) df2 %<>% dplyr::mutate_(.dots=paste0('factor(', df1_factors, ')') %>% setNames(df1_factors))
+        if ( length(df1_factors) > 0 ) df2 <- df2 %>% dplyr::mutate_(.dots=paste0('factor(', df1_factors, ')') %>% setNames(df1_factors))
 
         new_df <- dplyr::bind_rows(df1, df2)
 

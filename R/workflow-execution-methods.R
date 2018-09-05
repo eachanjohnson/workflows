@@ -7,11 +7,14 @@
 #' @param clobber Logical. Execute from the very beginning (\code{TRUE}) or from last-built Target (\code{FALSE}).
 #' @param ... Other arguments.
 #' @return List of class "workflow" or "pipeline" with targets built.
+#' @importFrom errR %except%
 #' @export
 execute <- function(x, ...) UseMethod('execute')
 
+#' @export
 execute.default <- function(x, ...) stop('Cannot execute', class(x))
 
+#' @export
 execute.workflow <- function(x, locality='local', parallel=TRUE, clobber=FALSE, ...) {
 
   if ( locality == 'local' )
@@ -49,6 +52,7 @@ execute.workflow <- function(x, locality='local', parallel=TRUE, clobber=FALSE, 
 
 }
 
+#' @export
 execute.pipeline <- function(x, clobber=FALSE, ...) {
 
   built_target_index <- which(sapply(x$targets, is_built))
@@ -104,11 +108,14 @@ execute.pipeline <- function(x, clobber=FALSE, ...) {
 #' @param clobber Logical. Execute from the very beginning (\code{TRUE}) or from last-built Target (\code{FALSE}).
 #' @param ... Other arguments.
 #' @return List of class "SGEjob" containing submission parameters.
+#' @importFrom errR %except%
 #' @export
 execute_distributed <- function(x, ...) UseMethod('execute_distributed')
 
+#' @export
 execute_distributed.default <- function(x, ...) stop('Cannot distribted execute', class(x))
 
+#' @export
 execute_distributed.pipeline <- function(x, submit_script,
                                          mode='sge', submit_command='qsub',
                                          clobber=TRUE, ...) {
@@ -132,11 +139,14 @@ execute_distributed.pipeline <- function(x, submit_script,
 
   original_script <- readLines(submit_script)
 
+  loaded_libs <- loadedNamespaces()
+
   substitutions <- c('__virtualmemory__'=this_pipeline_size,
                      '__name__'=this_job_name,
                      '__logfile__'=this_log_filename,
                      '__checkpointfile__'=x$checkpoint_filename,
-                     '__clobber__'=clobber)
+                     '__clobber__'=clobber,
+                     '__libraries__'=paste(loaded_libs, collapse=' '))
 
   substituted_script <- original_script
 
@@ -164,3 +174,27 @@ execute_distributed.pipeline <- function(x, submit_script,
                           virtual_memory=this_pipeline_size), class='SGEjob') )
 
 }
+
+#' Execute a Target object according to its call and provided input data.
+#'
+#' @param x Object of class "target".
+#'        data Apply the target's method to this data.
+#'        ... Other arguments.
+#' @return The result of applying the target's call to the \code{data}.
+#' @export
+build <- function(x, ...) UseMethod('build')
+
+#' @export
+build.default <- function(x, ...) stop('Cannot build', class(x))
+
+#' @export
+build.target <- function(x, data, ...) {
+
+  #stopifnot('pipeline' %in% class(pipeline))
+
+  new_data <- eval(x$call, list(data=data))
+
+  return ( new_data )
+
+}
+
