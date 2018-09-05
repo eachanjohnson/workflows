@@ -5,9 +5,10 @@
 #' requires a GridEngine cluster manager.
 #' @param parallel Logical. If \code{TRUE}, use all available cores for (hopefully) a performance gain.
 #' @param clobber Logical. Execute from the very beginning (\code{TRUE}) or from last-built Target (\code{FALSE}).
-#' @param ... Other arguments.
+#' @param ... Other arguments passed to execute_distributed.
 #' @return List of class "workflow" or "pipeline" with targets built.
 #' @importFrom errR %except%
+#' @seealso \link{execute_distributed}
 #' @export
 execute <- function(x, ...) UseMethod('execute')
 
@@ -24,7 +25,7 @@ execute.workflow <- function(x, locality='local', parallel=TRUE, clobber=FALSE, 
     println('Distributing GridEngine jobs...')
 
     # submit jobs to queue
-    sge_jobs <- lapply(x$pipelines, execute_distributed, clobber=clobber)
+    sge_jobs <- lapply(x$pipelines, execute_distributed, clobber=clobber, ...)
 
     failed_submissions <- sapply(sge_jobs, function(z) !z$successful_submission)
 
