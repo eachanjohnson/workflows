@@ -4,15 +4,19 @@
 \alias{newWorkflow}
 \title{Make a new Worklow object}
 \usage{
-newWorkflow(input_data, working_directory = ".", checkpoint = FALSE,
-  load_checkpoint = NULL, ...)
+newWorkflow(input_data = NULL, working_directory = ".",
+  checkpoint = FALSE, load_checkpoint = NULL, ...)
 }
 \arguments{
-\item{input_data}{Starting data
-working_directory Character. Top-level directory for data processing. Default is current working directory.
-checkpoint Boolean. Checkpoint intermediate files? Default \code{FALSE}.
-load_checkpoint Character. Start from named saved checkpoint. If \code{NULL} (default), don't.
-... Other arguments}
+\item{input_data}{Starting data}
+
+\item{working_directory}{Character. Top-level directory for data processing. Default is current working directory.}
+
+\item{checkpoint}{Boolean. Checkpoint intermediate files? Default \code{FALSE}.}
+
+\item{load_checkpoint}{Character. Start from named saved checkpoint. If \code{NULL} (default), don't. If \code{'latest'}, get the newest checkpoint files.}
+
+\item{...}{Other arguments}
 }
 \value{
 list of class "workflow"
