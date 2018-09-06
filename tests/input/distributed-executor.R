@@ -1,4 +1,3 @@
-
 library(workflows)
 
 checkpoint_file <- commandArgs(trailingOnly=TRUE)[1]

@@ -21,7 +21,7 @@ ws <- delay(ws, function(x) {
   x
 })
 
-w2 <- execute(ws, locality='sge', submit_script=file.path('tests', 'input', 'sge-template.sh'))
+w2  <- execute(ws, locality='sge', submit_script=file.path('tests', 'input', 'sge-template.sh'))
 w2g <- gather(w2, c('df', 'means', 'medians'))
 
 write_workflow(w2g, file.path(outdir, 'output-workflow.rds'))
