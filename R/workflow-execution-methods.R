@@ -27,7 +27,7 @@ execute.workflow <- function(x, locality='local', parallel=TRUE, clobber=FALSE, 
     # submit jobs to queue
     sge_jobs <- lapply(x$pipelines, execute_distributed, clobber=clobber, ...)
 
-    failed_submissions <- sapply(sge_jobs, function(z) !z$successful_submission)
+    failed_submissions <- !sapply(sge_jobs, getElement, 'successful_submission')
 
     if ( sum(failed_submissions) > 0 ) println('Warning: Failed', sum(failed_submissions), 'GridEngine submissions')
 
@@ -44,10 +44,16 @@ execute.workflow <- function(x, locality='local', parallel=TRUE, clobber=FALSE, 
 
     x$pipelines <- lapply(sge_jobs, function(z) readRDS(z$checkpoint_file))
 
+    failed_jobs <- setNames(!sapply(sge_jobs, is_successful), sapply(sge_jobs, getElement, 'success_filename'))
 
-  } else
+    #if ( sum(failed_jobs) > 0 ) println('Warning: Failed', sum(failed_jobs), 'GridEngine jobs')
+
+
+  } else {
 
     stop('Locality must be one of local or sge; was ', locality)
+
+  }
 
   return ( x )
 
@@ -114,7 +120,7 @@ execute.pipeline <- function(x, clobber=FALSE, ...) {
 execute_distributed <- function(x, ...) UseMethod('execute_distributed')
 
 #' @export
-execute_distributed.default <- function(x, ...) stop('Cannot distribted execute', class(x))
+execute_distributed.default <- function(x, ...) stop('Cannot distributed execute', class(x))
 
 #' @export
 execute_distributed.pipeline <- function(x, submit_script,
@@ -122,9 +128,9 @@ execute_distributed.pipeline <- function(x, submit_script,
                                          clobber=TRUE, ...) {
 
   # test for SGE
-  sge_test <- system2('qstat', stdout=TRUE) %except% NA
+  sge_test <- system2('qstat', stdout=TRUE) %except% 'no sge'
 
-  if ( is.na(sge_test[1]) ) stop('SGE commands can\'t be called (tested qstat)')
+  if ( length(sge_test) > 0 ) if ( sge_test == 'no sge' ) stop('SGE commands can\'t be called (tested qstat)')
 
   script_dir <- file.path(x$working_directory, '_sge-scripts')
   dir.create(script_dir, showWarnings=FALSE)
@@ -132,15 +138,15 @@ execute_distributed.pipeline <- function(x, submit_script,
   log_dir <- file.path(x$working_directory, '_sge-logs')
   dir.create(log_dir, showWarnings=FALSE)
 
-  this_submission_script_filename <- file.path(script_dir, paste0(basename(x$checkpoint_filename), submit_script))
-  this_log_filename               <- file.path(log_dir, paste0(basename(x$checkpoint_filename), submit_script, '.log'))
+  this_submission_script_filename <- file.path(script_dir, paste0(basename(x$checkpoint_filename), basename(submit_script)))
+  this_log_filename               <- file.path(log_dir, paste0(basename(x$checkpoint_filename), basename(submit_script), '.log'))
   this_success_filename           <- file.path(log_dir, paste0(basename(x$checkpoint_filename), '.success'))
   this_job_name                   <- paste('worker', basename(x$checkpoint_filename), sep='-')
-  this_pipeline_size              <- ceiling(object.size(x) / (1000^3)) * 3  #Gb
+  this_pipeline_size              <- ceiling(object.size(x) / (1000^3) * 3)  #Gb
 
   original_script <- readLines(submit_script)
 
-  loaded_libs <- loadedNamespaces()
+  loaded_libs <- sapply(sessionInfo()$otherPkgs, getElement, 'Package')
 
   substitutions <- c('__virtualmemory__'=this_pipeline_size,
                      '__name__'=this_job_name,

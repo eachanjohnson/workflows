@@ -24,7 +24,7 @@ is_out_of_queue <- function(x, ...) UseMethod('is_out_of_queue')
 is_out_of_queue.default <- function(x, ...) stop('Cannot check queue of', class(x))
 
 #' @export
-is_out_of_queue.SGEjob <- function(x, ...) system2('qstat', args=c('-j', x$job_id), stdout=FALSE) == 0
+is_out_of_queue.SGEjob <- function(x, ...) system2('qstat', args=c('-j', x$job_id), stdout=FALSE, stderr=FALSE) > 0
 
 #' @title Check if SGEjob still in queue
 #' @description Check if SGEjob still in queue
@@ -72,7 +72,7 @@ is_running.SGEjob <- function(x, ...) {
 #' @param ... Other arguments.
 #' @return \code{TRUE} if SGEjob ended successfully, otherwise \code{FALSE}.
 #' @export
-is_successful <- function(x, ...) UseMethod('is_running')
+is_successful <- function(x, ...) UseMethod('is_successful')
 
 #' @export
 is_successful.default <- function(x, ...) stop('Cannot check success of', class(x))

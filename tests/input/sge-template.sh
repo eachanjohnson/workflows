@@ -9,4 +9,4 @@
 source /broad/software/scripts/useuse
 reuse R-3.2
 
-Rscript distributed-executor.R __checkpointfile__ __clobber__ __libraries__
+Rscript tests/input/distributed-executor.R __checkpointfile__ __clobber__ __libraries__

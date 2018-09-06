@@ -3,7 +3,7 @@ library(workflows)
 
 checkpoint_file <- commandArgs(trailingOnly=TRUE)[1]
 clobber         <- as.logical(commandArgs(trailingOnly=TRUE)[2])
-libaries        <- commandArgs(trailingOnly=TRUE)[3:length(commandArgs(trailingOnly=TRUE))]
+libraries        <- commandArgs(trailingOnly=TRUE)[3:length(commandArgs(trailingOnly=TRUE))]
 
 for ( lib in libraries ) library(lib, character.only=TRUE)
 
