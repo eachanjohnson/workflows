@@ -34,9 +34,9 @@ execute.workflow <- function(x, locality='local', parallel=TRUE, clobber=FALSE, 
     println('Submitted GridEngine jobs...')
 
     # wait for completion
-    while ( any(sapply(sge_jobs, is_out_of_queue)) ) {
+    while ( any(!sapply(sge_jobs, is_out_of_queue)) ) {
 
-      Sys.sleep(30)
+      Sys.sleep(10)
 
     }
 
@@ -46,7 +46,7 @@ execute.workflow <- function(x, locality='local', parallel=TRUE, clobber=FALSE, 
 
     failed_jobs <- setNames(!sapply(sge_jobs, is_successful), sapply(sge_jobs, getElement, 'success_filename'))
 
-    #if ( sum(failed_jobs) > 0 ) println('Warning: Failed', sum(failed_jobs), 'GridEngine jobs')
+    if ( sum(failed_jobs) > 0 ) println('Warning: Failed', sum(failed_jobs), 'GridEngine jobs')
 
 
   } else {
