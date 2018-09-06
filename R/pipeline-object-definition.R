@@ -17,8 +17,11 @@ newPipeline <- function(input_data, checkpoint=FALSE, working_directory='.', ...
 
   if ( checkpoint ) dir.create(file.path(working_directory, '_checkpoints'), showWarnings=FALSE)
 
-  basic_structure$checkpoint_filename <- file.path(working_directory, '_checkpoints',
-                                                   paste0('checkpoint', as.numeric(Sys.time())))
+  basic_structure$checkpoint_directory <- file.path(working_directory, '_checkpoints')
+  basic_structure$checkpoint_id        <- as.numeric(Sys.time())
+  basic_structure$checkpoint_filename <- file.path(basic_structure$checkpoint_directory,
+                                                   paste0('checkpoint', basic_structure$checkpoint_id))
+
   basic_structure$temp_file <- paste0(basic_structure$checkpoint_filename, '.temp')
   basic_structure$lock_file <- paste0(basic_structure$checkpoint_filename, '.lock')
 

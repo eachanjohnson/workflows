@@ -4,12 +4,14 @@
 \alias{write_workflow}
 \title{Write Workflow to disk.}
 \usage{
-write_workflow(x, filename, ...)
+write_workflow(x, filename, cleanup = TRUE, ...)
 }
 \arguments{
 \item{x}{Object of class Workflow.}
 
 \item{filename}{Character. Filename to serialize \code{x} under.}
+
+\item{cleanup}{Logical. Delete intermediate pipeline checkpoints after saving?}
 
 \item{...}{Other arguments.}
 }
