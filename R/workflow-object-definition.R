@@ -35,9 +35,12 @@ newWorkflow <- function(input_data=NULL, working_directory='.',
       get_unique_values('filename')
 
     println('Loading latest checkpointed pipelines from directory', checkpoint_dir, ':\n',
-            paste(file_info, collapse='\n'))
+            ifelse(length(file_info) > 10, paste(length(file_info), 'checkpoint files'), paste(file_info, collapse='\n')))
 
-    basic_structure$pipelines <- lapply(file_info, readRDS)
+    basic_structure$pipelines <- lapply(file_info, function(x) {
+      println('Loading', x)
+      return( readRDS(x) )
+    })
 
   } else {
 

@@ -125,7 +125,10 @@ execute_distributed.default <- function(x, ...) stop('Cannot distributed execute
 #' @export
 execute_distributed.pipeline <- function(x, submit_script,
                                          mode='sge', submit_command='qsub',
-                                         clobber=TRUE, ...) {
+                                         clobber=TRUE,
+                                         mem_multiplier=10,
+                                         mem_unit='Mb',
+                                         run_time='2:00:00', ...) {
 
   # test for SGE
   sge_test <- system2('qstat', stdout=TRUE) %except% 'no sge'
@@ -142,24 +145,28 @@ execute_distributed.pipeline <- function(x, submit_script,
   this_log_filename               <- file.path(log_dir, paste0(basename(x$checkpoint_filename), basename(submit_script), '.log'))
   this_success_filename           <- file.path(log_dir, paste0(basename(x$checkpoint_filename), '.success'))
   this_job_name                   <- paste('worker', basename(x$checkpoint_filename), sep='-')
-  this_pipeline_size              <- ceiling(object.size(x) / (1000^3) * 3)  #Gb
+  this_pipeline_size              <- as.numeric(object.size(x)) * mem_multiplier  #b
+  size_divisor <- c(b=1, Kb=1000, Mb=1000^2, Gb=1000^3)
 
   original_script <- readLines(submit_script)
 
   loaded_libs <- sapply(sessionInfo()$otherPkgs, getElement, 'Package')
+
+  checkpoint(x)
+
+  this_pipeline_size <-unname(as.numeric(file.size(x$checkpoint_filename)) * mem_multiplier / size_divisor[mem_unit])
 
   substitutions <- c('__virtualmemory__'=this_pipeline_size,
                      '__name__'=this_job_name,
                      '__logfile__'=this_log_filename,
                      '__checkpointfile__'=x$checkpoint_filename,
                      '__clobber__'=clobber,
-                     '__libraries__'=paste(loaded_libs, collapse=' '))
+                     '__libraries__'=paste(loaded_libs, collapse=' '),
+                     '__runtime__'=run_time)
 
   substituted_script <- original_script
 
   for ( patt in names(substitutions) ) substituted_script <- gsub(patt, substitutions[patt], substituted_script, fixed=TRUE)
-
-  checkpoint(x)
 
   writeLines(substituted_script, this_submission_script_filename)
 

@@ -178,7 +178,8 @@ bind.pipeline <- function(x1, x2, elements, ...) {
 
   skeleton_pipeline$data <- new_pipeline_data
 
-  skeleton_pipeline$checkpoint_filename <- unname(splitter(skeleton_pipeline$checkpoint_filename, '-', 1))
+  skeleton_pipeline$checkpoint_filename <- file.path(skeleton_pipeline$checkpoint_directory,
+                                                   paste0('checkpoint', skeleton_pipeline$checkpoint_id))
   skeleton_pipeline$temp_file <- paste0(skeleton_pipeline$checkpoint_filename, '.temp')
   skeleton_pipeline$lock_file <- paste0(skeleton_pipeline$checkpoint_filename, '.lock')
 

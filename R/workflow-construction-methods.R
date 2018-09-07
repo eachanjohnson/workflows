@@ -159,15 +159,35 @@ is_built.target <- function(x, ...) x$is_built
 #' @description Save serialized Workflow \code{x} as \code{filename}
 #' @param x Object of class Workflow.
 #' @param filename Character. Filename to serialize \code{x} under.
+#' @param cleanup Logical. Delete intermediate pipeline checkpoints after saving?
 #' @param ... Other arguments.
 #' @return The input Workflow, invisibly.
 #' @seealso \link{saveRDS}
 #' @export
-write_workflow <- function(x, filename, ...) {
+write_workflow <- function(x, filename, cleanup=TRUE, ...) {
 
   println('Saving workflow as', filename)
 
   saveRDS(x, file=filename)
+
+  if ( cleanup ) {
+
+    println('Cleaning up checkpoints...')
+
+    for ( pipeline in x$pipelines ) {
+
+      file_list <- file.path(dirname(pipeline$checkpoint_filename),
+                             list.files(dirname(pipeline$checkpoint_filename), basename(pipeline$checkpoint_filename)))
+
+      for ( file_ in file_list ) {
+
+        println('Deleting', file_, '...')
+        unlink(file_)
+
+      }
+
+    }
+  }
 
   return ( invisible(x) )
 
