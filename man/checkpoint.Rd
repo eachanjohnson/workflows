@@ -2,14 +2,22 @@
 % Please edit documentation in R/workflow-construction-methods.R
 \name{checkpoint}
 \alias{checkpoint}
+\alias{checkpoint.default}
+\alias{checkpoint.pipeline}
 \title{Checkpoint Pipeline to disk}
 \usage{
 checkpoint(x, ...)
+
+\method{checkpoint}{default}(x, ...)
+
+\method{checkpoint}{pipeline}(x, force = FALSE, ...)
 }
 \arguments{
 \item{x}{Object of class "workflow" or "pipeline".}
 
 \item{...}{Other arguments.}
+
+\item{force}{Logical. If \code{x$checkpoint} is FALSE, override?}
 }
 \value{
 A list of class "pipeline" invisibly.

@@ -12,9 +12,11 @@
 #' @export
 execute <- function(x, ...) UseMethod('execute')
 
+#' @rdname execute
 #' @export
 execute.default <- function(x, ...) stop('Cannot execute', class(x))
 
+#' @rdname execute
 #' @export
 execute.workflow <- function(x, locality='local', parallel=TRUE, clobber=FALSE, ...) {
 
@@ -59,6 +61,7 @@ execute.workflow <- function(x, locality='local', parallel=TRUE, clobber=FALSE, 
 
 }
 
+#' @rdname execute
 #' @export
 execute.pipeline <- function(x, clobber=FALSE, ...) {
 
@@ -113,22 +116,27 @@ execute.pipeline <- function(x, clobber=FALSE, ...) {
 #' @param submit_command Character. Command used for job submission; usually "qsub" (the default).
 #' @param submit_script Character. Path to a SGE submission script template.
 #' @param clobber Logical. Execute from the very beginning (\code{TRUE}) or from last-built Target (\code{FALSE}).
+#' @param mem_multiplier Numeric. Multiplier of checkpoint file size to calculate memory reservations.
+#' @param mem_unit Character. One of \code{"Kb","Mb","Gb"} to indicate what units to reserve memory in.
+#' @param run_time Character. Run time reservation. Default is 8 hours (\code{"8:00:00"}).
 #' @param ... Other arguments.
 #' @return List of class "SGEjob" containing submission parameters.
 #' @importFrom errR %except%
 #' @export
 execute_distributed <- function(x, ...) UseMethod('execute_distributed')
 
+#' @rdname execute_distributed
 #' @export
 execute_distributed.default <- function(x, ...) stop('Cannot distributed execute', class(x))
 
+#' @rdname execute_distributed
 #' @export
 execute_distributed.pipeline <- function(x, submit_script,
                                          mode='sge', submit_command='qsub',
                                          clobber=TRUE,
                                          mem_multiplier=10,
                                          mem_unit='Mb',
-                                         run_time='2:00:00', ...) {
+                                         run_time='8:00:00', ...) {
 
   # test for SGE
   sge_test <- system2('qstat', stdout=TRUE) %except% 'no sge'
@@ -145,16 +153,15 @@ execute_distributed.pipeline <- function(x, submit_script,
   this_log_filename               <- file.path(log_dir, paste0(basename(x$checkpoint_filename), basename(submit_script), '.log'))
   this_success_filename           <- file.path(log_dir, paste0(basename(x$checkpoint_filename), '.success'))
   this_job_name                   <- paste('worker', basename(x$checkpoint_filename), sep='-')
-  this_pipeline_size              <- as.numeric(object.size(x)) * mem_multiplier  #b
-  size_divisor <- c(b=1, Kb=1000, Mb=1000^2, Gb=1000^3)
 
   original_script <- readLines(submit_script)
 
   loaded_libs <- sapply(sessionInfo()$otherPkgs, getElement, 'Package')
 
-  checkpoint(x)
+  checkpoint(x, force=TRUE) # save x so it can be loaded by the remote job
 
-  this_pipeline_size <-unname(as.numeric(file.size(x$checkpoint_filename)) * mem_multiplier / size_divisor[mem_unit])
+  size_divisor <- c(b=1, Kb=1000, Mb=1000^2, Gb=1000^3)
+  this_pipeline_size <- unname(as.numeric(file.size(x$checkpoint_filename)) * mem_multiplier / size_divisor[mem_unit])
 
   substitutions <- c('__virtualmemory__'=this_pipeline_size,
                      '__name__'=this_job_name,
@@ -192,15 +199,17 @@ execute_distributed.pipeline <- function(x, submit_script,
 #' Execute a Target object according to its call and provided input data.
 #'
 #' @param x Object of class "target".
-#'        data Apply the target's method to this data.
-#'        ... Other arguments.
+#' @param Apply the target's method to this data.
+#' @param ... Other arguments.
 #' @return The result of applying the target's call to the \code{data}.
 #' @export
 build <- function(x, ...) UseMethod('build')
 
+#' @rdname build
 #' @export
 build.default <- function(x, ...) stop('Cannot build', class(x))
 
+#' @rdname build
 #' @export
 build.target <- function(x, data, ...) {
 

@@ -2,9 +2,19 @@
 % Please edit documentation in R/workflow-execution-methods.R
 \name{execute}
 \alias{execute}
+\alias{execute.default}
+\alias{execute.pipeline}
+\alias{execute.workflow}
 \title{Execute a Workflow or Pipeline}
 \usage{
 execute(x, ...)
+
+\method{execute}{default}(x, ...)
+
+\method{execute}{workflow}(x, locality = "local", parallel = TRUE,
+  clobber = FALSE, ...)
+
+\method{execute}{pipeline}(x, clobber = FALSE, ...)
 }
 \arguments{
 \item{x}{List of class "workflow" or "pipeline". If workflow, builds the targets in the Pipelines; if Pipeline, builds the targets.}

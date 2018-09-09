@@ -2,9 +2,15 @@
 % Please edit documentation in R/workflow-manipulation-methods.R
 \name{gather}
 \alias{gather}
+\alias{gather.default}
+\alias{gather.workflow}
 \title{Gather data into one pipeline}
 \usage{
 gather(x, ...)
+
+\method{gather}{default}(x, ...)
+
+\method{gather}{workflow}(x, elements, by, ...)
 }
 \arguments{
 \item{x}{Object of class "workflow".}

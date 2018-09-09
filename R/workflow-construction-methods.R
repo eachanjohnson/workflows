@@ -8,9 +8,11 @@
 #' @export
 delay <- function(x, ...) UseMethod('delay')
 
+#' @rdname delay
 #' @export
 delay.default <- function(x, ...) stop('Cannot delay ', class(x))
 
+#' @rdname delay
 #' @export
 delay.workflow <- function(x, method, ...) {
 
@@ -20,6 +22,7 @@ delay.workflow <- function(x, method, ...) {
 
 }
 
+#' @rdname delay
 #' @export
 delay.pipeline <- function(x, method, ...) {
 
@@ -51,9 +54,11 @@ delay.pipeline <- function(x, method, ...) {
 #' @export
 rollback <- function(x, ...) UseMethod('rollback')
 
+#' @rdname rollback
 #' @export
 rollback.default <- function(x, ...) stop('Cannot roll back', class(x))
 
+#' @rdname rollback
 #' @export
 rollback.workflow <- function(x,  n=-1, ...) {
 
@@ -63,6 +68,7 @@ rollback.workflow <- function(x,  n=-1, ...) {
 
 }
 
+#' @rdname rollback
 #' @export
 rollback.pipeline <- function(x,  n=-1, ...) {
 
@@ -96,18 +102,28 @@ rollback.pipeline <- function(x,  n=-1, ...) {
 #' @title Checkpoint Pipeline to disk
 #' @description Serializes Pipeline object under its \code{checkpoint_filename} attribute.
 #' @param x Object of class "workflow" or "pipeline".
+#' @param force Logical. If \code{x$checkpoint} is FALSE, override?
 #' @param ... Other arguments.
 #' @return A list of class "pipeline" invisibly.
 #' @export
 checkpoint <- function(x, ...) UseMethod('checkpoint')
 
+#' @rdname checkpoint
 #' @export
 checkpoint.default <- function(x, ...) stop('Cannot checkpoint', class(x))
 
+#' @rdname checkpoint
 #' @export
-checkpoint.pipeline <- function(x, ...) {
+checkpoint.pipeline <- function(x, force=FALSE, ...) {
 
-  if ( x$checkpoint & ! is_locked(x) ) {
+  if ( (force | x$checkpoint) & ! is_locked(x) ) {
+
+    if ( ! file.exists(x$checkpoint_directory) ) {
+
+      println('No checkpoint directory; creating:',  x$checkpoint_directory)
+      dir.create(x$checkpoint_directory, showWarnings=FALSE, recursive=TRUE)
+
+    }
 
     writeLines(x$lock_file, x$lock_file)
     println('Checkpoint: Saving temporary file', x$temp_file)
@@ -135,9 +151,11 @@ checkpoint.pipeline <- function(x, ...) {
 #' @export
 is_locked <- function(x, ...) UseMethod('is_locked')
 
+#' @rdname is_locked
 #' @export
 is_locked.default <- function(x, ...) stop('Cannot check lock on', class(x))
 
+#' @rdname is_locked
 #' @export
 is_locked.pipeline <- function(x, ...) file.exists(x$lock_file)
 
@@ -149,9 +167,11 @@ is_locked.pipeline <- function(x, ...) file.exists(x$lock_file)
 #' @export
 is_built <- function(x, ...) UseMethod('is_built')
 
+#' @rdname is_built
 #' @export
 is_built.default <- function(x, ...) stop('Cannot check build of', class(x))
 
+#' @rdname is_built
 #' @export
 is_built.target <- function(x, ...) x$is_built
 

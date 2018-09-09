@@ -2,22 +2,36 @@
 % Please edit documentation in R/workflow-execution-methods.R
 \name{execute_distributed}
 \alias{execute_distributed}
+\alias{execute_distributed.default}
+\alias{execute_distributed.pipeline}
 \title{Execute a Pipeline on SGE}
 \usage{
 execute_distributed(x, ...)
+
+\method{execute_distributed}{default}(x, ...)
+
+\method{execute_distributed}{pipeline}(x, submit_script, mode = "sge",
+  submit_command = "qsub", clobber = TRUE, mem_multiplier = 10,
+  mem_unit = "Mb", run_time = "8:00:00", ...)
 }
 \arguments{
 \item{x}{List of class "workflow" or "pipeline". If workflow, builds the targets in the Pipelines; if Pipeline, builds the targets.}
 
 \item{...}{Other arguments.}
 
+\item{submit_script}{Character. Path to a SGE submission script template.}
+
 \item{mode}{Not used.}
 
 \item{submit_command}{Character. Command used for job submission; usually "qsub" (the default).}
 
-\item{submit_script}{Character. Path to a SGE submission script template.}
-
 \item{clobber}{Logical. Execute from the very beginning (\code{TRUE}) or from last-built Target (\code{FALSE}).}
+
+\item{mem_multiplier}{Numeric. Multiplier of checkpoint file size to calculate memory reservations.}
+
+\item{mem_unit}{Character. One of \code{"Kb","Mb","Gb"} to indicate what units to reserve memory in.}
+
+\item{run_time}{Character. Run time reservation. Default is 8 hours (\code{"8:00:00"}).}
 }
 \value{
 List of class "SGEjob" containing submission parameters.

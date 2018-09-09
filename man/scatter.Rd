@@ -2,9 +2,15 @@
 % Please edit documentation in R/workflow-manipulation-methods.R
 \name{scatter}
 \alias{scatter}
+\alias{scatter.default}
+\alias{scatter.workflow}
 \title{Split pipeline data into parallel chunks}
 \usage{
 scatter(x, ...)
+
+\method{scatter}{default}(x, ...)
+
+\method{scatter}{workflow}(x, elements, by, ...)
 }
 \arguments{
 \item{x}{Object of class "workflow" or "pipeline".}

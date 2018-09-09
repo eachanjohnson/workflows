@@ -7,8 +7,10 @@
 #' @return Vector of same class as \code{column}
 get_unique_values <- function(x, ...) UseMethod('get_unique_values')
 
+#' @rdname get_unique_values
 get_unique_values.default <- function(x, ...) stop('Can\t get unique values of', class(x))
 
+#' @rdname get_unique_values
 get_unique_values.data.frame <- function(x, column, sort_result=TRUE, ...) {
 
   column_values <- getElement(x, column)
@@ -22,7 +24,7 @@ get_unique_values.data.frame <- function(x, column, sort_result=TRUE, ...) {
 
 #' @title Generate calls of function applied to arguments
 #' @description Generate calls of function applied to arguments.
-#' @param x Function.
+#' @param f Function.
 #' @param ... Objects to apply f to.
 #' @return A call.
 call_factory <- function(f, ...) UseMethod('call_factory')
@@ -31,27 +33,25 @@ call_factory.default <- function(f, ...) stop('Can\t generate calls for', class(
 
 call_factory.function <- function(f, ...) as.call(c(list(f), lapply(c(...), I)))
 
-#' @title Generate calls of function applied to arguments
-#' @description Generate calls of function applied to arguments.
-#' @param x Function.
-#' @param ... Objects to apply f to.
-#' @return A call.
+#' #@title Generate calls of function applied to arguments
+#' #@description Generate calls of function applied to arguments.
+#' #@param X Function.
+#' #@param ... Objects to apply f to.
+#' #@return A call.
 mclapply2 <- function(X, FUN, ...,
                       mc.preschedule = TRUE, mc.set.seed = TRUE,
                       mc.silent = FALSE, mc.cores = get_cores(),
                       mc.cleanup = TRUE, mc.allow.recursive = FALSE) {
 
-  library('parallel')
-
   original_class <- class(X)
 
   if ( is.data.frame(X) ) new_x <- FUN(X, ...)
-  else                    new_x <- mclapply(X, FUN, ...,
-                                            mc.preschedule = mc.preschedule,
-                                            mc.set.seed = mc.set.seed,
-                                            mc.silent = mc.silent, mc.cores = mc.cores,
-                                            mc.cleanup = mc.cleanup,
-                                            mc.allow.recursive = mc.allow.recursive)
+  else                    new_x <- parallel::mclapply(X, FUN, ...,
+                                                      mc.preschedule = mc.preschedule,
+                                                      mc.set.seed = mc.set.seed,
+                                                      mc.silent = mc.silent, mc.cores = mc.cores,
+                                                      mc.cleanup = mc.cleanup,
+                                                      mc.allow.recursive = mc.allow.recursive)
 
   class(new_x) <- original_class
 

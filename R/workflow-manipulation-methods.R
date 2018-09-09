@@ -11,9 +11,11 @@
 #' @export
 scatter <- function(x, ...) UseMethod('scatter')
 
+#' @rdname scatter
 #' @export
 scatter.default <- function(x, ...) stop('Cannot scatter ', class(x))
 
+#' @rdname scatter
 #' @export
 scatter.workflow <- function(x, elements, by, ...) {
 
@@ -86,9 +88,11 @@ scatter.pipeline <- function(x, elements, by, ...) {
 #' @export
 gather <- function(x, ...) UseMethod('gather')
 
+#' @rdname gather
 #' @export
 gather.default <- function(x, ...) stop('Cannot gather ', class(x))
 
+#' @rdname gather
 #' @export
 gather.workflow <- function(x, elements, by, ...) {
 
@@ -108,17 +112,19 @@ gather.workflow <- function(x, elements, by, ...) {
 #' @title Combine two pipelines into one
 #' @description Combine two pipelines into a single pipeline. This pipeline has attribiutes from the
 #' first pipeline of the input, except the \code{elements}, which are row-bound together.
-#' @param x Object of class "pipeline".
+#' @param x1 Object of class "pipeline".
+#' @param x2 Object of class "pipeline".
 #' @param elements Elements of \code{data} attribute to combine.
-#' @param by Not used.
 #' @param ... Other arguments.
 #' @return A list of class "pipeline".
 #' @export
-bind <- function(x, ...) UseMethod('bind')
+bind <- function(x1, ...) UseMethod('bind')
 
+#' @rdname bind
 #' @export
-bind.default <- function(x, ...) stop('Cannot bind ', class(x))
+bind.default <- function(x1, ...) stop('Cannot bind ', class(x1))
 
+#' @rdname bind
 #' @importFrom magrittr %>% %<>%
 #' @export
 bind.pipeline <- function(x1, x2, elements, ...) {

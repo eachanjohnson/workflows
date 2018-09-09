@@ -2,21 +2,21 @@
 % Please edit documentation in R/helper-functions.R
 \name{mclapply2}
 \alias{mclapply2}
-\title{Generate calls of function applied to arguments}
+\title{#@title Generate calls of function applied to arguments
+#@description Generate calls of function applied to arguments.
+#@param X Function.
+#@param ... Objects to apply f to.
+#@return A call.}
 \usage{
 mclapply2(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
   mc.silent = FALSE, mc.cores = get_cores(), mc.cleanup = TRUE,
   mc.allow.recursive = FALSE)
 }
-\arguments{
-\item{...}{Objects to apply f to.}
-
-\item{x}{Function.}
-}
-\value{
-A call.
-}
 \description{
-Generate calls of function applied to arguments.
+#@title Generate calls of function applied to arguments
+#@description Generate calls of function applied to arguments.
+#@param X Function.
+#@param ... Objects to apply f to.
+#@return A call.
 }
 

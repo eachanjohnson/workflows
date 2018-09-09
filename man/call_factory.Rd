@@ -7,9 +7,9 @@
 call_factory(f, ...)
 }
 \arguments{
-\item{...}{Objects to apply f to.}
+\item{f}{Function.}
 
-\item{x}{Function.}
+\item{...}{Objects to apply f to.}
 }
 \value{
 A call.
