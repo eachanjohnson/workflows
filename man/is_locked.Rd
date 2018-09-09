@@ -2,9 +2,15 @@
 % Please edit documentation in R/workflow-construction-methods.R
 \name{is_locked}
 \alias{is_locked}
+\alias{is_locked.default}
+\alias{is_locked.pipeline}
 \title{Check if Pipeline is locked by another process}
 \usage{
 is_locked(x, ...)
+
+\method{is_locked}{default}(x, ...)
+
+\method{is_locked}{pipeline}(x, ...)
 }
 \arguments{
 \item{x}{List of class "pipeline".}

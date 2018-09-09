@@ -2,18 +2,24 @@
 % Please edit documentation in R/workflow-manipulation-methods.R
 \name{bind}
 \alias{bind}
+\alias{bind.default}
+\alias{bind.pipeline}
 \title{Combine two pipelines into one}
 \usage{
-bind(x, ...)
+bind(x1, ...)
+
+\method{bind}{default}(x1, ...)
+
+\method{bind}{pipeline}(x1, x2, elements, ...)
 }
 \arguments{
-\item{x}{Object of class "pipeline".}
+\item{x1}{Object of class "pipeline".}
 
 \item{...}{Other arguments.}
 
-\item{elements}{Elements of \code{data} attribute to combine.}
+\item{x2}{Object of class "pipeline".}
 
-\item{by}{Not used.}
+\item{elements}{Elements of \code{data} attribute to combine.}
 }
 \value{
 A list of class "pipeline".

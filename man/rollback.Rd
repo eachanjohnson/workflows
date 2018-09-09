@@ -2,9 +2,18 @@
 % Please edit documentation in R/workflow-construction-methods.R
 \name{rollback}
 \alias{rollback}
+\alias{rollback.default}
+\alias{rollback.pipeline}
+\alias{rollback.workflow}
 \title{Revert execution state to previous target}
 \usage{
 rollback(x, ...)
+
+\method{rollback}{default}(x, ...)
+
+\method{rollback}{workflow}(x, n = -1, ...)
+
+\method{rollback}{pipeline}(x, n = -1, ...)
 }
 \arguments{
 \item{x}{Object of class "workflow" or "pipeline".}

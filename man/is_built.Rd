@@ -2,9 +2,15 @@
 % Please edit documentation in R/workflow-construction-methods.R
 \name{is_built}
 \alias{is_built}
+\alias{is_built.default}
+\alias{is_built.target}
 \title{Check if Target is built}
 \usage{
 is_built(x, ...)
+
+\method{is_built}{default}(x, ...)
+
+\method{is_built}{target}(x, ...)
 }
 \arguments{
 \item{x}{List of class "target".}

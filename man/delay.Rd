@@ -2,9 +2,18 @@
 % Please edit documentation in R/workflow-construction-methods.R
 \name{delay}
 \alias{delay}
+\alias{delay.default}
+\alias{delay.pipeline}
+\alias{delay.workflow}
 \title{Add a step to a workflow or pipeline}
 \usage{
 delay(x, ...)
+
+\method{delay}{default}(x, ...)
+
+\method{delay}{workflow}(x, method, ...)
+
+\method{delay}{pipeline}(x, method, ...)
 }
 \arguments{
 \item{x}{Object of class "workflow" or "pipeline".}

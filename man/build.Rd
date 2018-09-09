@@ -2,14 +2,22 @@
 % Please edit documentation in R/workflow-execution-methods.R
 \name{build}
 \alias{build}
+\alias{build.default}
+\alias{build.target}
 \title{Execute a Target object according to its call and provided input data.}
 \usage{
 build(x, ...)
+
+\method{build}{default}(x, ...)
+
+\method{build}{target}(x, data, ...)
 }
 \arguments{
-\item{x}{Object of class "target".
-data Apply the target's method to this data.
-... Other arguments.}
+\item{x}{Object of class "target".}
+
+\item{...}{Other arguments.}
+
+\item{Apply}{the target's method to this data.}
 }
 \value{
 The result of applying the target's call to the \code{data}.
