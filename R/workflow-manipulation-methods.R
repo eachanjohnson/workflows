@@ -46,15 +46,16 @@ scatter.pipeline <- function(x, elements, by, ...) {
   new_pipeline_datas <- lapply(seq_len(n_chunks), function(i) {
 
     new_pipeline_data <- skeleton_pipeline_data
+    new_pipeline_data <- lapply(elements, function(e) chunked_elements[[e]][[i]])
 
-
-    for ( element in elements ) {
-
-      new_pipeline_data[[element]] <- chunked_elements[[element]][[i]]
-
-    }
+#     for ( element in elements ) {
+#
+#       new_pipeline_data[[element]] <- chunked_elements[[element]][[i]]
+#
+#     }
 
     return ( structure(new_pipeline_data, class=original_class) )
+
   })
 
   new_pipelines <- lapply(new_pipeline_datas, function(z) {
@@ -65,10 +66,10 @@ scatter.pipeline <- function(x, elements, by, ...) {
     skeleton_pipeline$checkpoint_filename <- paste(skeleton_pipeline$checkpoint_filename,
                                                    skeleton_pipeline$scattered_by,
                                                    skeleton_pipeline$scattered_value, sep='-')
-    skeleton_pipeline$temp_file <- paste0(skeleton_pipeline$checkpoint_filename, '.temp')
-    skeleton_pipeline$lock_file <- paste0(skeleton_pipeline$checkpoint_filename, '.lock')
+    skeleton_pipeline$temp_file           <- paste0(skeleton_pipeline$checkpoint_filename, '.temp')
+    skeleton_pipeline$lock_file           <- paste0(skeleton_pipeline$checkpoint_filename, '.lock')
 
-    return (structure(skeleton_pipeline, class='pipeline'))
+    return ( structure(skeleton_pipeline, class='pipeline') )
 
   })
 

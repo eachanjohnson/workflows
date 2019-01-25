@@ -14,6 +14,6 @@ newTarget <- function(method, input_file=NA, output_file=NA, ...) {
                           lock_file=NA, temp_file=NA,
                           input_file=input_file, output_file=NA)
 
-  return (structure(basic_structure, class='target'))
+  return ( structure(basic_structure, class='target') )
 
 }
