@@ -8,7 +8,7 @@
 get_unique_values <- function(x, ...) UseMethod('get_unique_values')
 
 #' @rdname get_unique_values
-get_unique_values.default <- function(x, ...) stop('Can\t get unique values of', class(x))
+get_unique_values.default <- function(x, ...) stop('Can\'t get unique values of ', class(x))
 
 #' @rdname get_unique_values
 get_unique_values.data.frame <- function(x, column, sort_result=TRUE, ...) {

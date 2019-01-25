@@ -46,13 +46,12 @@ scatter.pipeline <- function(x, elements, by, ...) {
   new_pipeline_datas <- lapply(seq_len(n_chunks), function(i) {
 
     new_pipeline_data <- skeleton_pipeline_data
-    new_pipeline_data <- lapply(elements, function(e) chunked_elements[[e]][[i]])
 
-#     for ( element in elements ) {
-#
-#       new_pipeline_data[[element]] <- chunked_elements[[element]][[i]]
-#
-#     }
+    for ( element in elements ) {
+
+      new_pipeline_data[[element]] <- chunked_elements[[element]][[i]]
+
+    }
 
     return ( structure(new_pipeline_data, class=original_class) )
 
