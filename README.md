@@ -1,3 +1,5 @@
+[![Travis-CI Build Status](https://travis-ci.org/eachanjohnson/workflows.svg?branch=master)](https://travis-ci.org/eachanjohnson/workflows)
+
 # Workflows
 
 Ad-hoc pipeline construction and execution in R. 
