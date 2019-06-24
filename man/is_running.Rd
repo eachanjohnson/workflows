@@ -17,4 +17,3 @@ is_running(x, ...)
 \description{
 Check if SGEjob still running
 }
-

@@ -31,4 +31,3 @@ first pipeline of the input, except the \code{elements}, which are row-bound tog
 \seealso{
 \code{\link{bind}}
 }
-

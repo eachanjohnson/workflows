@@ -2,15 +2,16 @@
 % Please edit documentation in R/helper-functions.R
 \name{get_unique_values}
 \alias{get_unique_values}
-\alias{get_unique_values.data.frame}
 \alias{get_unique_values.default}
+\alias{get_unique_values.data.frame}
 \title{Get unique values}
 \usage{
 get_unique_values(x, ...)
 
 \method{get_unique_values}{default}(x, ...)
 
-\method{get_unique_values}{data.frame}(x, column, sort_result = TRUE, ...)
+\method{get_unique_values}{data.frame}(x, column, sort_result = TRUE,
+  ...)
 }
 \arguments{
 \item{x}{Object of class "data.frame"".}
@@ -27,4 +28,3 @@ Vector of same class as \code{column}
 \description{
 Get unique values of an element of an object.
 }
-

@@ -25,4 +25,3 @@ The result of applying the target's call to the \code{data}.
 \description{
 Execute a Target object according to its call and provided input data.
 }
-

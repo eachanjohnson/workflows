@@ -30,4 +30,3 @@ Split pipeline data into parallel chunks by some filtering condition. Each uniqu
 column \code{by} in the \code{elements} of the \code{data} attribute of each "pipeline" is split into a separate pipeline.
 All other attributes are copied.
 }
-

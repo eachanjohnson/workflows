@@ -17,4 +17,3 @@ Output of \code{qstat} for \code{jobid} of SGEjob.
 \description{
 Check on SGEjob status by getting output of \code{qstat}.
 }
-

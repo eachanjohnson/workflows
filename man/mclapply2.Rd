@@ -19,4 +19,3 @@ mclapply2(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
 #@param ... Objects to apply f to.
 #@return A call.
 }
-

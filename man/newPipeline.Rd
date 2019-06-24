@@ -4,7 +4,8 @@
 \alias{newPipeline}
 \title{Make a new Pipeline object.}
 \usage{
-newPipeline(input_data, checkpoint = FALSE, working_directory = ".", ...)
+newPipeline(input_data, checkpoint = FALSE, working_directory = ".",
+  ...)
 }
 \arguments{
 \item{input_data}{Starting data}
@@ -21,4 +22,3 @@ list of class "pipeline"
 \description{
 Make a new Pipeline object.
 }
-

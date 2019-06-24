@@ -7,6 +7,6 @@
 #$ -l h_vmem=__virtualmemory__m,h_rt=__runtime__
 
 source /broad/software/scripts/useuse
-reuse R-3.2
+reuse R-3.5
 
 Rscript tests/input/distributed-executor.R __checkpointfile__ __clobber__ __libraries__

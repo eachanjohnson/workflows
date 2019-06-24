@@ -39,4 +39,3 @@ List of class "SGEjob" containing submission parameters.
 \description{
 Execute the Targets in Pipeleines using a GridEngine style cluster.
 }
-

@@ -17,4 +17,3 @@ is_successful(x, ...)
 \description{
 Check if SGEjob ended successfully, as determined by existence of file at path \code{success_filename}.
 }
-

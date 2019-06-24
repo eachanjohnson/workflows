@@ -20,4 +20,3 @@ Load serialized Workflow from \code{filename}.
 \seealso{
 \link{readRDS}
 }
-

@@ -23,4 +23,3 @@ is_built(x, ...)
 \description{
 Returns \code{TRUE} or \code{FALSE} depending on whether target has been built.
 }
-

@@ -24,4 +24,3 @@ Save serialized Workflow \code{x} as \code{filename}
 \seealso{
 \link{saveRDS}
 }
-

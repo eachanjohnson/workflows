@@ -31,7 +31,7 @@ call_factory <- function(f, ...) UseMethod('call_factory')
 
 call_factory.default <- function(f, ...) stop('Can\t generate calls for', class(f))
 
-call_factory.function <- function(f, ...) as.call(c(list(f), lapply(c(...), I)))
+call_factory.function <- function(f, ...) as.call(c(list(f), lapply(c(...), function(x) x)))
 
 #' #@title Generate calls of function applied to arguments
 #' #@description Generate calls of function applied to arguments.

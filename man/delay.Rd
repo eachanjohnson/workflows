@@ -3,8 +3,8 @@
 \name{delay}
 \alias{delay}
 \alias{delay.default}
-\alias{delay.pipeline}
 \alias{delay.workflow}
+\alias{delay.pipeline}
 \title{Add a step to a workflow or pipeline}
 \usage{
 delay(x, ...)
@@ -29,4 +29,3 @@ If \code{x} is a "workflow", then a list of class "workflow" with a new "target"
 \description{
 Add a step to a "workflow" or "pipeline" object where \code{method} will be executed.
 }
-

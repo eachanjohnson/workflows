@@ -24,4 +24,3 @@ is_locked(x, ...)
 Rerturns \code{TRUE} or \code{FALSE} depending on presence of Pipeline lockfile as defined in the \code{lock_file}
 attribute.
 }
-

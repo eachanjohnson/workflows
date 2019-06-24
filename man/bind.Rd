@@ -28,4 +28,3 @@ A list of class "pipeline".
 Combine two pipelines into a single pipeline. This pipeline has attribiutes from the
 first pipeline of the input, except the \code{elements}, which are row-bound together.
 }
-

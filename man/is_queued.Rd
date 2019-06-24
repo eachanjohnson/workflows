@@ -17,4 +17,3 @@ is_queued(x, ...)
 \description{
 Check if SGEjob still in queue
 }
-

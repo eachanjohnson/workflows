@@ -21,4 +21,3 @@ list of class "target"
 \description{
 Make a new Target object.
 }
-

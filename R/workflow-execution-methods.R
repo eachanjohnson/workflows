@@ -141,7 +141,7 @@ execute_distributed.pipeline <- function(x, submit_script,
   # test for SGE
   sge_test <- system2('qstat', stdout=TRUE) %except% 'no sge'
 
-  if ( length(sge_test) > 0 ) if ( sge_test == 'no sge' ) stop('SGE commands can\'t be called (tested qstat)')
+  if ( length(sge_test) > 0 && sge_test == 'no sge' ) stop('SGE commands can\'t be called (tested qstat)')
 
   script_dir <- file.path(x$working_directory, '_sge-scripts')
   dir.create(script_dir, showWarnings=FALSE)

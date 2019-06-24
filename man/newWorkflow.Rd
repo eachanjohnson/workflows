@@ -24,4 +24,3 @@ list of class "workflow"
 \description{
 Make a new Worklow object
 }
-

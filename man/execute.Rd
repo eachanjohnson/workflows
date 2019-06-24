@@ -3,8 +3,8 @@
 \name{execute}
 \alias{execute}
 \alias{execute.default}
-\alias{execute.pipeline}
 \alias{execute.workflow}
+\alias{execute.pipeline}
 \title{Execute a Workflow or Pipeline}
 \usage{
 execute(x, ...)
@@ -37,4 +37,3 @@ Execute the Targets in Pipeleines.
 \seealso{
 \link{execute_distributed}
 }
-

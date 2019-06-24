@@ -25,4 +25,3 @@ A list of class "pipeline" invisibly.
 \description{
 Serializes Pipeline object under its \code{checkpoint_filename} attribute.
 }
-

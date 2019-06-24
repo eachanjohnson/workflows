@@ -3,8 +3,8 @@
 \name{rollback}
 \alias{rollback}
 \alias{rollback.default}
-\alias{rollback.pipeline}
 \alias{rollback.workflow}
+\alias{rollback.pipeline}
 \title{Revert execution state to previous target}
 \usage{
 rollback(x, ...)
@@ -28,4 +28,3 @@ A "workflow", or "pipeline" with altered "target" build states.
 \description{
 Sets targets as unbuilt, so running \code{execute} will re-build them.
 }
-
