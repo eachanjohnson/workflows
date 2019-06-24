@@ -177,7 +177,7 @@ execute_distributed.pipeline <- function(x, submit_script,
 
   writeLines(substituted_script, this_submission_script_filename)
 
-  command_options <- c('-terse', this_submission_script_filename)
+  command_options <- c('-terse', paste0("'", this_submission_script_filename, "'"))
 
   if ( file.exists(this_success_filename) ) unlink(this_success_filename)
 
